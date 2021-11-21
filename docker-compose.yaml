@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  web:
+    image: wordpress:5.8.2-php8.0
+    platform: linux/amd64
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: ocms-db:3306
+      WORDPRESS_DB_NAME: ocms
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wpuser
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 8000:80
+    depends_on:
+      - ocms-db
+  
+  ocms-db:
+    image: mysql:5.7.36
+    platform: linux/amd64
+    restart: always
+    environment:
+      MYSQL_DATABASE: ocms
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wpuser
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33066:3306
+
