@@ -11,7 +11,7 @@ services:
       WORDPRESS_DB_USER: wpuser
       WORDPRESS_DB_PASSWORD: wpuser
     volumes:
-      - .dbdata:/var/lib/mysql
+      - ./app:/var/www/html
     ports:
       - 8000:80
     depends_on:
